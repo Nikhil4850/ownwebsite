@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn - DevProjects Store</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dev<span>Projects</span></a>
+  <div class="nav-links">
+    <a href="index.html">Projects</a>
+    <a href="learn.html" style="color:var(--text)">Learn</a>
+    <a href="index.html#how-it-works">How it Works</a>
+    <a href="mailto:you@email.com">Contact</a>
+  </div>
+</nav>
+
+<section class="hero" style="padding:3rem 2rem 2rem;">
+  <div class="badge">📺 Free Tutorials</div>
+  <h1>Learn to <span>Build</span> & Code</h1>
+  <p>Watch free tutorials covering full-stack development, cyber security, and more.</p>
+</section>
+
+<div class="section">
+  <div class="video-filters" id="videoFilters"></div>
+  <div class="videos-grid" id="videosGrid"></div>
+</div>
+
+<!-- Video Player Modal -->
+<div class="modal-overlay" id="videoModal">
+  <div class="video-modal">
+    <div class="video-modal-header">
+      <span id="videoModalTitle"></span>
+      <button class="video-close-btn">✕</button>
+    </div>
+    <div class="video-embed-wrap">
+      <iframe id="videoIframe" src="" frameborder="0" allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 DevProjects Store. All rights reserved.</p>
+</footer>
+
+<script src="js/videos.js"></script>
+<script>
+  const videosGrid = document.getElementById('videosGrid');
+  const videoFilters = document.getElementById('videoFilters');
+  const videoModal = document.getElementById('videoModal');
+  const videoIframe = document.getElementById('videoIframe');
+  const videoModalTitle = document.getElementById('videoModalTitle');
+
+  // Build filter buttons
+  const categories = ['All', ...new Set(videos.map(v => v.category))];
+  categories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (cat === 'All' ? ' active' : '');
+    btn.textContent = cat;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderVideos(cat === 'All' ? videos : videos.filter(v => v.category === cat));
+    });
+    videoFilters.appendChild(btn);
+  });
+
+  function renderVideos(list) {
+    videosGrid.innerHTML = '';
+    list.forEach(v => {
+      const thumb = `https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg`;
+
+      const card = document.createElement('div');
+      card.className = 'video-card';
+
+      const thumbWrap = document.createElement('div');
+      thumbWrap.className = 'video-thumb-wrap';
+
+      const img = document.createElement('img');
+      img.className = 'video-thumb';
+      img.src = thumb;
+      img.alt = v.title;
+      img.loading = 'lazy';
+
+      const playBtn = document.createElement('div');
+      playBtn.className = 'play-btn';
+      playBtn.textContent = '▶';
+
+      thumbWrap.appendChild(img);
+      thumbWrap.appendChild(playBtn);
+
+      if (v.duration) {
+        const dur = document.createElement('span');
+        dur.className = 'video-duration';
+        dur.textContent = v.duration;
+        thumbWrap.appendChild(dur);
+      }
+
+      const info = document.createElement('div');
+      info.className = 'video-info';
+      info.innerHTML = `
+        <span class="video-category">${v.category}</span>
+        <div class="video-title">${v.title}</div>
+        <div class="video-desc">${v.description}</div>
+      `;
+
+      const watchBtn = document.createElement('button');
+      watchBtn.className = 'btn btn-outline';
+      watchBtn.style.cssText = 'margin-top:0.75rem;width:100%';
+      watchBtn.textContent = v.youtubeUrl ? '↗ Watch on YouTube' : '▶ Watch Now';
+
+      // Safe event listeners — no string escaping issues
+      const handleClick = () => {
+        if (v.youtubeUrl) {
+          window.open(v.youtubeUrl, '_blank', 'noopener');
+        } else {
+          openVideoModal(v.youtubeId, v.title);
+        }
+      };
+      thumbWrap.addEventListener('click', handleClick);
+      watchBtn.addEventListener('click', handleClick);
+
+      info.appendChild(watchBtn);
+      card.appendChild(thumbWrap);
+      card.appendChild(info);
+      videosGrid.appendChild(card);
+    });
+  }
+
+  renderVideos(videos);
+
+  function openVideoModal(youtubeId, title) {
+    videoModalTitle.textContent = title;
+    // Set src after modal is visible so iframe loads correctly
+    videoModal.classList.add('active');
+    videoIframe.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
+  }
+
+  function closeVideoModal() {
+    videoIframe.src = '';
+    videoModal.classList.remove('active');
+  }
+
+  document.querySelector('.video-close-btn').addEventListener('click', closeVideoModal);
+
+  videoModal.addEventListener('click', function(e) {
+    if (e.target === this) closeVideoModal();
+  });
+</script>
+</body>
+</html>

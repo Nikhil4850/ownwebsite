@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevProjects Store - Buy Student Projects</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Dev<span>Projects</span></div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="learn.html">Learn</a>
+    <a href="#how-it-works">How it Works</a>
+    <a href="mailto:you@email.com">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="badge">🎓 Built for Students</div>
+  <h1>Buy <span>Ready-Made</span> Projects<br/>with Source Code</h1>
+  <p>Browse real-world projects, see live demos, and get the full source code + setup guide instantly after purchase.</p>
+  <a href="#projects" class="btn btn-primary btn-lg">Browse Projects</a>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Projects Available</div></div>
+  <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Happy Students</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Source Code Included</div></div>
+  <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Instant Download</div></div>
+</div>
+
+<section class="section" id="projects">
+  <div class="section-title">All Projects</div>
+  <div class="section-sub">Click "Live Demo" to preview, then purchase to get the full code.</div>
+  <div class="projects-grid" id="projectsGrid"></div>
+</section>
+
+<section class="section" id="how-it-works">
+  <div class="section-title">How it Works</div>
+  <div class="section-sub">Simple 3-step process</div>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">👀</div>
+      <div style="font-weight:700;margin-bottom:0.4rem;">1. Browse & Preview</div>
+      <div style="color:var(--muted);font-size:0.9rem;">Explore projects and watch live demos before buying.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">💳</div>
+      <div style="font-weight:700;margin-bottom:0.4rem;">2. Secure Payment</div>
+      <div style="color:var(--muted);font-size:0.9rem;">Pay safely via Razorpay — UPI, cards, net banking all supported.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">📦</div>
+      <div style="font-weight:700;margin-bottom:0.4rem;">3. Instant Download</div>
+      <div style="color:var(--muted);font-size:0.9rem;">Get the ZIP file + step-by-step run instructions immediately.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 DevProjects Store. All rights reserved.</p>
+  <p style="margin-top:0.5rem;">Payments secured by Razorpay</p>
+</footer>
+
+<script src="js/projects.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

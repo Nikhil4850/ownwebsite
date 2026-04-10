@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Purchase Successful - DevProjects Store</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dev<span>Projects</span></a>
+</nav>
+
+<div class="success-container" id="successContent">
+  <p style="color:var(--muted)">Loading...</p>
+</div>
+
+<script>
+  const data = sessionStorage.getItem('downloadData');
+  const container = document.getElementById('successContent');
+
+  if (!data) {
+    container.innerHTML = `
+      <p style="color:var(--muted)">No purchase data found.</p>
+      <a href="index.html" class="btn btn-primary" style="margin-top:1rem">Browse Projects</a>
+    `;
+  } else {
+    const { projectName, zipUrl, instructions } = JSON.parse(data);
+    sessionStorage.removeItem('downloadData'); // clear after reading
+
+    container.innerHTML = `
+      <div class="success-icon">🎉</div>
+      <h1 style="font-size:2rem;font-weight:800;margin-bottom:0.5rem;">Payment Successful!</h1>
+      <p style="color:var(--muted);margin-bottom:2rem;">You've purchased <strong style="color:var(--text)">${projectName}</strong>. Download your files below.</p>
+
+      <div class="download-box">
+        <div style="font-weight:700;margin-bottom:1rem;font-size:1.1rem;">📦 Your Download</div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Click the button below to download the full source code ZIP file.</p>
+        <a href="${zipUrl}" download class="btn btn-success btn-lg" style="width:100%;justify-content:center;">
+          ⬇ Download Source Code (ZIP)
+        </a>
+      </div>
+
+      <div style="text-align:left;margin-bottom:1rem;">
+        <div style="font-weight:700;margin-bottom:0.75rem;">📋 How to Run This Project</div>
+        <div class="instructions-box">${instructions}</div>
+      </div>
+
+      <a href="index.html" class="btn btn-outline" style="margin-top:1rem">Browse More Projects</a>
+    `;
+  }
+</script>
+</body>
+</html>

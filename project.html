@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Details - DevProjects Store</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dev<span>Projects</span></a>
+  <div class="nav-links">
+    <a href="index.html">← Back to Projects</a>
+  </div>
+</nav>
+
+<div class="detail-hero" id="detailContent">
+  <p style="color:var(--muted)">Loading project...</p>
+</div>
+
+<!-- Payment Confirm Modal -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal">
+    <h2>Confirm Purchase</h2>
+    <p id="modalDesc">You're about to purchase this project.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" id="payBtn" onclick="startPayment()">Pay with Razorpay</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="js/projects.js"></script>
+<script src="js/razorpay.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const projectId = params.get('id');
+  const project = projects.find(p => p.id === projectId);
+  const content = document.getElementById('detailContent');
+
+  if (!project) {
+    content.innerHTML = '<p style="color:var(--muted)">Project not found. <a href="index.html" style="color:var(--primary)">Go back</a></p>';
+  } else {
+    document.title = `${project.title} - DevProjects Store`;
+    content.innerHTML = `
+      <h1 style="font-size:2rem;font-weight:800;margin-bottom:0.5rem;">${project.title}</h1>
+      <p style="color:var(--muted);margin-bottom:2rem;">${project.description}</p>
+      <div class="detail-grid">
+        <div>
+          <iframe class="demo-frame" src="${project.demoUrl}" title="Live Demo" allowfullscreen></iframe>
+          <p style="color:var(--muted);font-size:0.8rem;margin-top:0.5rem;">↑ Live demo preview. <a href="${project.demoUrl}" target="_blank" style="color:var(--primary)">Open in new tab →</a></p>
+          <div style="margin-top:1.5rem;">
+            <div style="font-weight:700;margin-bottom:0.75rem;">Tech Stack</div>
+            <div class="card-tech">${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
+          </div>
+        </div>
+        <div class="detail-sidebar">
+          <div class="detail-price">₹${project.price}</div>
+          <div style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">One-time payment. Instant access.</div>
+          <button class="btn btn-primary btn-lg" style="width:100%" onclick="openModal()">Buy Now</button>
+          <hr class="divider" />
+          <div style="font-weight:600;margin-bottom:0.5rem;">What you get:</div>
+          <ul class="feature-list">
+            ${project.features.map(f => `<li>${f}</li>`).join('')}
+            <li>Full Source Code (ZIP)</li>
+            <li>Step-by-step Run Guide</li>
+          </ul>
+          <hr class="divider" />
+          <div style="color:var(--muted);font-size:0.8rem;text-align:center;">🔒 Secure payment via Razorpay</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function openModal() {
+    document.getElementById('modalDesc').textContent = `Purchase "${project.title}" for ₹${project.price}`;
+    document.getElementById('payModal').classList.add('active');
+  }
+  function closeModal() {
+    document.getElementById('payModal').classList.remove('active');
+  }
+</script>
+</body>
+</html>
